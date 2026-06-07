@@ -261,8 +261,8 @@ SCENES_BY_DAY = {
         {"speaker": None,
          "text": "Stoisz pod salą już dobre 10 minut, a tłum studentów rośnie."},
         {"speaker": None,
-         "text": "Pod ścianą widzisz ekipę chłopaków z roku: Nate, Juras "
-                 "i Friki. Słyszysz strzępy ich rozmowy."},
+         "text": "Pod ścianą widzisz ekipę chłopaków z roku: Nate, Juras, Friki "
+                 "i Dima. Słyszysz strzępy ich rozmowy."},
         {"speaker": "Nate",
          "text": "No friki, no nie no, chodź z nami jutro do Pointa, zajebiście będzie!"},
         {"speaker": "Juras",
@@ -338,33 +338,25 @@ SCENES_BY_DAY = {
          "text": "Nie wiem chłopaki... Sam się tam czuję trochę dziwnie.",
          "image": "szymon_neutral.png"},
 
-        # — POJAWIA SIĘ DIMA —
-        {"id": "day3_dima", "speaker": None,
-         "text": "Nagle z końca korytarza pojawia się postać. Każdy go zna. Dima."},
-        {"speaker": None,
-         "text": "Wszyscy milkną. Dima podchodzi spokojnie, bez pośpiechu, "
-                 "i kładzie rękę na ramieniu Szymona."},
+        # — Dima rzuca swoje trzy grosze —
+        {"id": "day3_dima", "speaker": "Dima",
+         "text": "E Pecik, no chodź z nami, co ty taki spięty."},
         {"speaker": "Dima",
-         "text": "Pecik. Bracie. Słuchaj mnie uważnie."},
-        {"speaker": "Dima",
-         "text": "Laski w Poincie są jak Bitcoin w 2010 roku. "
-                 "Kto teraz nie kupuje, ten za 10 lat będzie tylko żałować."},
-        {"speaker": None,
-         "text": "W korytarzu zapada absolutna cisza. Friki podrapuje się "
-                 "po głowie. Nate kiwa głową z nabożnym podziwem. "
-                 "Juras szepcze 'mistrz...' pod nosem."},
+         "text": "Słuchaj — laski w Poincie są jak Bitcoin w 2010. "
+                 "Kto teraz nie kupuje, ten potem będzie żałował, ziom."},
+        {"speaker": "Nate", "text": "Hahaha no Dima dobre!"},
+        {"speaker": "Friki", "text": "Kurde, w sumie ma sens..."},
         {"speaker": "Szymon",
          "text": "...kurczę. Dobra. Idę. Ale tylko z {mojeimie}!",
          "image": "szymon_happy.png", "_rep_add": {"szymon": 1},
          "_set": {"day3_done": 1}},
-        {"speaker": "Nate", "text": "ZAJEBIŚCIE PECIK! Tak się robi mężczyznę!"},
+        {"speaker": "Nate", "text": "ZAJEBIŚCIE PECIK! No to widzimy się jutro!"},
         {"speaker": "Friki",
          "text": "Eeeh, dobra, też wbijam. Jak Pecik daje radę to ja tym bardziej."},
         {"speaker": "Juras",
          "text": "Robi się ekipa! Jutro o 22:00 pod Pointem!"},
-        {"speaker": None,
-         "text": "Dima uśmiechnął się tajemniczo, mrugnął do ciebie znacząco "
-                 "i odszedł równie cicho jak się pojawił."},
+        {"speaker": "Dima",
+         "text": "No to spoko, lecę po kawę. Trzymajcie się chłopaki."},
         {"speaker": None,
          "text": "Wykładowca w końcu przyszedł, ale reszta dnia minęła ci w napięciu — "
                  "myślisz tylko o jutrzejszym wieczorze."},
