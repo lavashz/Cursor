@@ -38,14 +38,16 @@ IMAGES_DIR  = "images"
 #      - "_goto"
 #      - "_branch"        (wartości słownika)
 #      - "_branch_rep"    ("default" + każdy próg w "thresholds")
+#      - "_branch_var"    ("default" + każdy próg w "thresholds")
 #  mogą być stringami (etykiety) lub intami (indeksy, kompatybilność wstecz).
 #
-#  Sekwencyjny przepływ: jeśli scena nie ma _goto/_branch/_branch_rep/choices,
-#  gra przechodzi do następnego elementu w SCENES (idx + 1).
+#  Dodatkowe dyrektywy mutujące stan:
+#      - "_set":  {var: value, ...}        — ustawia (nadpisuje)
+#      - "_inc":  {var: delta, ...}        — inkrementuje liczbowo
+#      - "_rep_add": {char: delta, ...}    — inkrementuje rep_{char} + toast
 #
-#  Funkcja _build_scenes() spłaszcza SCENES_BY_DAY do listy SCENES oraz
-#  buduje mapę LABELS: {nazwa_etykiety -> idx}. Przy dodawaniu nowych scen
-#  WYSTARCZY nadać im czytelne "id" — nie trzeba liczyć indeksów ręcznie.
+#  Sekwencyjny przepływ: jeśli scena nie ma _goto/_branch*/choices,
+#  gra przechodzi do następnego elementu w SCENES (idx + 1).
 # ══════════════════════════════════════════════════════════════════════════════
 
 SCENES_BY_DAY = {
@@ -72,13 +74,65 @@ SCENES_BY_DAY = {
          "text": "Bardzo miło cię poznać, {mojeimie}! Ja jestem Szymon — "
                  "dla kolegów po prostu Pecik haha ;)",
          "image": "szymon_ukw_happy.png"},
-        {"speaker": "Szymon",
+
+        # — Pytanie kolegi — pętla z licznikiem "Nie" odblokowuje Dzień 2115 —
+        {"id": "ask_friend", "speaker": "Szymon",
          "text": "Może byś też chciał zostać moim kolegą?",
          "image": "szymon_ukw_happy.png",
          "choices": [
              {"label": "Tak, jasne!",  "next": "day1_friend"},
-             {"label": "Nie, dzięki.", "next": "game_over"},
+             {"label": "Nie, dzięki.", "next": "say_no"},
          ]},
+
+        # Niewidoczny licznik klikniec "Nie" — 5 razy odblokowuje sekret
+        {"id": "say_no", "speaker": None, "text": "",
+         "_inc": {"no_count": 1},
+         "_branch_var": {"var": "no_count",
+                         "thresholds": [(5, "day2115_unlock"),
+                                        (4, "no_react_4"),
+                                        (3, "no_react_3"),
+                                        (2, "no_react_2"),
+                                        (1, "no_react_1")],
+                         "default": "game_over"}},
+
+        {"id": "no_react_1", "speaker": "Szymon",
+         "text": "Eee... jak to nie? Hahaha no dobra, może źle usłyszałem. "
+                 "Spróbujmy jeszcze raz...",
+         "image": "szymon_ukw_neutral.png",
+         "_goto": "ask_friend"},
+
+        {"id": "no_react_2", "speaker": "Szymon",
+         "text": "Czekaj, ty serio? No daj spróbuję jeszcze raz, dobra? "
+                 "Bo coś mi się ten dzień zaczyna powtarzać...",
+         "image": "szymon_ukw_neutral.png",
+         "_goto": "ask_friend"},
+
+        {"id": "no_react_3", "speaker": "Szymon",
+         "text": "Stary... mam dziwne déjà vu. Jakby... ja juz to mówił. "
+                 "Ostatni raz, przysięgam.",
+         "image": "szymon_ukw_neutral.png",
+         "_goto": "ask_friend"},
+
+        {"id": "no_react_4", "speaker": "Szymon",
+         "text": "{mojeimie}... coś jest mocno nie tak. Czuję jak czas się składa. "
+                 "Ale spytam jeszcze raz. Musi się złamać.",
+         "image": "szymon_ukw_neutral.png",
+         "_goto": "ask_friend"},
+
+        # — 5te "Nie" — odblokowanie sekretu —
+        {"id": "day2115_unlock", "speaker": "Szymon",
+         "text": "...okej. Coś tu pęka. Stary, ja czuję jakąś dziurę w rzeczywistości.",
+         "image": "szymon_ukw_neutral.png"},
+        {"speaker": None,
+         "text": "Korytarz się rozmywa. Światła migają. Ktoś gdzieś krzyczy 'Bedoes'.",
+         "effect": "flash"},
+        {"speaker": None,
+         "text": "Czas się składa jak akordeon. Minęły sekundy. Albo lata. "
+                 "Trudno powiedzieć.",
+         "effect": "flash",
+         "_goto": "day2115"},
+
+        # — Normalna ścieżka (zostalismy kolegami) —
         {"id": "day1_friend", "speaker": "Szymon",
          "text": "Ale SUPEEEEERRRR! Dobra, muszę uciekać — nara!",
          "image": "szymon_happy.png",
@@ -338,25 +392,25 @@ SCENES_BY_DAY = {
          "text": "Nie wiem chłopaki... Sam się tam czuję trochę dziwnie.",
          "image": "szymon_neutral.png"},
 
-        # — Dochodzi Dima, czwarty z ekipy —
+        # — POJAWIA SIĘ DIMA —
         {"id": "day3_dima", "speaker": None,
-         "text": "Z końca korytarza nadchodzi Dima — wraca z plastikowym kubkiem "
-                 "z automatu, kawa parzy mu palce."},
+         "text": "Z końca korytarza nadchodzi Dima — wraca z papierowym kubkiem "
+                 "z automatu, irish cappuccino parzy mu palce."},
         {"speaker": "Dima",
-         "text": "Co tam chłopaki, o czym dyskusja?"},
+         "text": "Co tam chłopaki, o czym gadka?"},
         {"speaker": "Nate",
          "text": "Próbujemy Pecika namówić na Pointa, ale jakoś nie idzie."},
         {"speaker": "Dima",
-         "text": "Eee Pecik, no co ty, co ty taki spięty. To tylko klub, "
+         "text": "Szymi, no co ty, co ty taki spięty. To tylko klub, "
                  "nie kopalnia."},
         {"speaker": "Szymon",
          "text": "Ja po prostu nie czuję tych miejsc... lampy migają, ludzie głupieją...",
          "image": "szymon_neutral.png"},
         {"speaker": "Dima",
-         "text": "No dobra, posłucha mnie. Powiem ci tak. "
+         "text": "No dobra, posłuchaj mnie. Powiem ci tak. "
                  "Laski w Poincie są jak Bitcoin w 2010 roku."},
         {"speaker": "Dima",
-         "text": "Kto teraz nie kupuje, ten potem będzie tylko żałował, ziom. "
+         "text": "Kto teraz nie kupuje, ten za 10 lat będzie tylko żałował. "
                  "A ty młody jesteś, masz teraz okno."},
         {"speaker": "Nate", "text": "Hahaha no Dima dobre, zapisuję sobie!"},
         {"speaker": "Friki", "text": "Kurde, w sumie... ma sens."},
@@ -707,36 +761,48 @@ SCENES_BY_DAY = {
          "effect": "shake"},
         {"speaker": None,
          "text": "Ochrona prowadzi Szymona na scenę. Reflektory go zalewają. "
-                 "Bedoes podaje mu mikrofon."},
+                 "Bedoes podaje mu mikrofon.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": "Bedoes",
          "text": "Brachu, śpiewałeś z takim ogniem że nie miałem wyjścia. "
-                 "Lecimy razem. Refren."},
+                 "Lecimy razem. Refren.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
-         "text": "Muzyka rusza znowu. Wy dwaj na scenie. Mikrofon w środku."},
+         "text": "Muzyka rusza znowu. Wy dwaj na scenie. Mikrofon w środku.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
-         "text": "'Choć nie widać na zewnątrz, w środku jestem zniszczony...'"},
+         "text": "'Choć nie widać na zewnątrz, w środku jestem zniszczony...'",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
          "text": "Tysiące głosów krzyczą z wami. Stadion drży. Szymon śpiewa "
-                 "tak jakby od tego zależało jego życie."},
+                 "tak jakby od tego zależało jego życie.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
-         "text": "Po ostatniej nucie zapada cisza. Absolutna, święta cisza."},
+         "text": "Po ostatniej nucie zapada cisza. Absolutna, święta cisza.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
          "text": "Bedoes patrzy na Szymona. Szymon patrzy na Bedoesa. "
-                 "Czas się zatrzymuje."},
+                 "Czas się zatrzymuje.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
          "text": "I nagle... pocałunek. Na oczach 30 tysięcy ludzi.",
-         "effect": "flash"},
+         "effect": "flash",
+         "image": "szymon_bedoes_pocalunek.png"},
         {"speaker": None,
          "text": "Stadion eksploduje krzykiem. Telefony unoszą się w górę. "
-                 "Każda twarz patrzy na scenę."},
+                 "Każda twarz patrzy na scenę.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
          "text": "Wśród tłumu ty stoisz nieruchomo. Szymon — którego znałeś "
-                 "od pierwszego dnia studiów — całuje swojego idola."},
+                 "od pierwszego dnia studiów — całuje swojego idola.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
          "text": "Twoje serce pęka. Ale jednocześnie... cieszysz się za niego. "
-                 "Bo widzisz na jego twarzy to czego nigdy nie widziałeś wcześniej."},
+                 "Bo widzisz na jego twarzy to czego nigdy nie widziałeś wcześniej.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
-         "text": "Bo zawsze wiedziałeś — Szymon był wart więcej niż tylko ty."},
+         "text": "Bo zawsze wiedziałeś — Szymon był wart więcej niż tylko ty.",
+         "image": "szymon_bedoes_scena.png"},
         {"speaker": None,
          "text": "— PRAWDZIWY KONIEC —", "effect": "flash",
          "_goto": "end_story"},
@@ -1622,6 +1688,9 @@ class VisualNovel:
         if scene.get("effect") == "flash": self._flash()
         elif scene.get("effect") == "shake": self._shake()
         if "_set" in scene: self.game_vars.update(scene["_set"])
+        if "_inc" in scene:
+            for k, delta in scene["_inc"].items():
+                self.game_vars[k] = self.game_vars.get(k, 0) + delta
         if "_rep_add" in scene:
             names = {"szymon": "Szymon", "swiatas": "Światas"}
             for char, delta in scene["_rep_add"].items():
@@ -1670,6 +1739,11 @@ class VisualNovel:
             self.waiting_input = False
             self.continue_btn.pack(side=tk.RIGHT)
             self._type_text(text, done=lambda: self._show_choices(scene["choices"]))
+        elif not text and (
+                "_goto" in scene or "_branch" in scene or "_branch_rep" in scene
+                or "_branch_var" in scene):
+            # Niewidoczna scena routingowa — natychmiast skacz dalej
+            self.root.after(1, self._advance)
         else:
             self.waiting_input = False
             self.continue_btn.pack(side=tk.RIGHT)
@@ -1759,6 +1833,16 @@ class VisualNovel:
             target = br.get("default")
             for threshold, next_t in br["thresholds"]:
                 if pts >= threshold:
+                    target = next_t
+                    break
+            self._show_scene(_resolve_target(target))
+        elif "_branch_var" in scene:
+            bv = scene["_branch_var"]
+            var = bv["var"]
+            val = self.game_vars.get(var, 0)
+            target = bv.get("default")
+            for threshold, next_t in bv["thresholds"]:
+                if val >= threshold:
                     target = next_t
                     break
             self._show_scene(_resolve_target(target))
