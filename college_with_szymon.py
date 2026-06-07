@@ -261,8 +261,8 @@ SCENES_BY_DAY = {
         {"speaker": None,
          "text": "Stoisz pod salą już dobre 10 minut, a tłum studentów rośnie."},
         {"speaker": None,
-         "text": "Pod ścianą widzisz ekipę chłopaków z roku: Nate, Juras, Friki "
-                 "i Dima. Słyszysz strzępy ich rozmowy."},
+         "text": "Pod ścianą widzisz ekipę chłopaków z roku: Nate, Juras "
+                 "i Friki. Słyszysz strzępy ich rozmowy."},
         {"speaker": "Nate",
          "text": "No friki, no nie no, chodź z nami jutro do Pointa, zajebiście będzie!"},
         {"speaker": "Juras",
@@ -338,14 +338,30 @@ SCENES_BY_DAY = {
          "text": "Nie wiem chłopaki... Sam się tam czuję trochę dziwnie.",
          "image": "szymon_neutral.png"},
 
-        # — Dima rzuca swoje trzy grosze —
-        {"id": "day3_dima", "speaker": "Dima",
-         "text": "E Pecik, no chodź z nami, co ty taki spięty."},
+        # — Dochodzi Dima, czwarty z ekipy —
+        {"id": "day3_dima", "speaker": None,
+         "text": "Z końca korytarza nadchodzi Dima — wraca z plastikowym kubkiem "
+                 "z automatu, kawa parzy mu palce."},
         {"speaker": "Dima",
-         "text": "Słuchaj — laski w Poincie są jak Bitcoin w 2010. "
-                 "Kto teraz nie kupuje, ten potem będzie żałował, ziom."},
-        {"speaker": "Nate", "text": "Hahaha no Dima dobre!"},
-        {"speaker": "Friki", "text": "Kurde, w sumie ma sens..."},
+         "text": "Co tam chłopaki, o czym dyskusja?"},
+        {"speaker": "Nate",
+         "text": "Próbujemy Pecika namówić na Pointa, ale jakoś nie idzie."},
+        {"speaker": "Dima",
+         "text": "Eee Pecik, no co ty, co ty taki spięty. To tylko klub, "
+                 "nie kopalnia."},
+        {"speaker": "Szymon",
+         "text": "Ja po prostu nie czuję tych miejsc... lampy migają, ludzie głupieją...",
+         "image": "szymon_neutral.png"},
+        {"speaker": "Dima",
+         "text": "No dobra, posłucha mnie. Powiem ci tak. "
+                 "Laski w Poincie są jak Bitcoin w 2010 roku."},
+        {"speaker": "Dima",
+         "text": "Kto teraz nie kupuje, ten potem będzie tylko żałował, ziom. "
+                 "A ty młody jesteś, masz teraz okno."},
+        {"speaker": "Nate", "text": "Hahaha no Dima dobre, zapisuję sobie!"},
+        {"speaker": "Friki", "text": "Kurde, w sumie... ma sens."},
+        {"speaker": "Juras",
+         "text": "Słyszysz Pecik? Nawet Friki łapie o co chodzi."},
         {"speaker": "Szymon",
          "text": "...kurczę. Dobra. Idę. Ale tylko z {mojeimie}!",
          "image": "szymon_happy.png", "_rep_add": {"szymon": 1},
@@ -356,7 +372,8 @@ SCENES_BY_DAY = {
         {"speaker": "Juras",
          "text": "Robi się ekipa! Jutro o 22:00 pod Pointem!"},
         {"speaker": "Dima",
-         "text": "No to spoko, lecę po kawę. Trzymajcie się chłopaki."},
+         "text": "No widzicie. A teraz wybaczcie, idę dopić tę kawę zanim "
+                 "wystygnie. Nara chłopaki."},
         {"speaker": None,
          "text": "Wykładowca w końcu przyszedł, ale reszta dnia minęła ci w napięciu — "
                  "myślisz tylko o jutrzejszym wieczorze."},
