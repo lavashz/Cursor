@@ -84,47 +84,36 @@ SCENES_BY_DAY = {
              {"label": "Nie, dzięki.", "next": "say_no"},
          ]},
 
-        # Niewidoczny licznik klikniec "Nie" — 5 razy odblokowuje sekret
+        # Niewidoczny licznik klikniec "Nie" — 5 razy odblokowuje sekret.
+        # Z perspektywy gracza kazde "Nie" wyglada na zwykla smierc + restart.
         {"id": "say_no", "speaker": None, "text": "",
          "_inc": {"no_count": 1},
          "_branch_var": {"var": "no_count",
-                         "thresholds": [(5, "day2115_unlock"),
-                                        (4, "no_react_4"),
-                                        (3, "no_react_3"),
-                                        (2, "no_react_2"),
-                                        (1, "no_react_1")],
-                         "default": "game_over"}},
+                         "thresholds": [(5, "day2115_unlock")],
+                         "default": "kill_screen"}},
 
-        {"id": "no_react_1", "speaker": "Szymon",
-         "text": "Eee... jak to nie? Hahaha no dobra, może źle usłyszałem. "
-                 "Spróbujmy jeszcze raz...",
-         "image": "szymon_ukw_neutral.png",
-         "_goto": "ask_friend"},
-
-        {"id": "no_react_2", "speaker": "Szymon",
-         "text": "Czekaj, ty serio? No daj spróbuję jeszcze raz, dobra? "
-                 "Bo coś mi się ten dzień zaczyna powtarzać...",
-         "image": "szymon_ukw_neutral.png",
-         "_goto": "ask_friend"},
-
-        {"id": "no_react_3", "speaker": "Szymon",
-         "text": "Stary... mam dziwne déjà vu. Jakby... ja juz to mówił. "
-                 "Ostatni raz, przysięgam.",
-         "image": "szymon_ukw_neutral.png",
-         "_goto": "ask_friend"},
-
-        {"id": "no_react_4", "speaker": "Szymon",
-         "text": "{mojeimie}... coś jest mocno nie tak. Czuję jak czas się składa. "
-                 "Ale spytam jeszcze raz. Musi się złamać.",
-         "image": "szymon_ukw_neutral.png",
-         "_goto": "ask_friend"},
+        # Jeden ekran smierci dla klikniec 1-4 — wyglada identycznie, zeby
+        # gracz nie podejrzewal ze cos sie pod spodem dzieje.
+        {"id": "kill_screen", "speaker": None,
+         "text": "SZYMON CIĘ ZABIŁ\n\n— GAME OVER —",
+         "effect": "shake",
+         "image": "szymon_ukw_neutral.png"},
+        {"speaker": None,
+         "text": "Czy chcesz rozpocząć grę od nowa?",
+         "choices": [
+             {"label": "Tak, od nowa", "next": "title"},
+             {"label": "Nie, wyjdź",   "next": "true_game_over"},
+         ]},
 
         # — 5te "Nie" — odblokowanie sekretu —
         {"id": "day2115_unlock", "speaker": "Szymon",
-         "text": "...okej. Coś tu pęka. Stary, ja czuję jakąś dziurę w rzeczywistości.",
+         "text": "Mam dziwne déjà vu... Jakbym... juz to mówiłem.",
+         "image": "szymon_ukw_neutral.png"},
+        {"speaker": "Szymon",
+         "text": "Coś tu pęka. Stary, ja czuję jakąś dziurę w rzeczywistości.",
          "image": "szymon_ukw_neutral.png"},
         {"speaker": None,
-         "text": "Korytarz się rozmywa. Światła migają. Ktoś gdzieś krzyczy 'Bedoes'.",
+         "text": "Korytarz się rozmywa. Światła migają.",
          "effect": "flash"},
         {"speaker": None,
          "text": "Czas się składa jak akordeon. Minęły sekundy. Albo lata. "
@@ -720,6 +709,591 @@ SCENES_BY_DAY = {
         # ── KLUB END ───────────────────────────────────────────────────────
         {"id": "club_end", "speaker": None,
          "text": "Wracasz w końcu do domu. Wieczór za tobą, klucz do drzwi w drżącej dłoni.",
+         "_goto": "day5_start"},
+    ],
+
+    # ── DZIEŃ 5 — STOŁÓWKA PO POINTIE (wprowadzenie Nataniela + Kamila) ─────
+    5: [
+        {"id": "day5_start", "speaker": None, "text": "Dzień 5"},
+        {"speaker": None,
+         "text": "Rano. Głowa pęka. Wpadłeś do uniwersyteckiej stołówki "
+                 "po kawę i kanapkę, modląc się żeby świat się ułożył."},
+        {"speaker": None,
+         "text": "Powoli przy długim stole zaczyna się zbierać ekipa."},
+
+        # — Światas wchodzi pierwszy —
+        {"speaker": None,
+         "text": "Pierwszy wpada Światas — w okularach przeciwsłonecznych, "
+                 "mimo że jesteśmy w środku budynku."},
+        {"speaker": "Światas",
+         "text": "Eee... {mojeimie}... ktoś mi pamięta jak się wczoraj dostałem do domu?"},
+        {"speaker": None, "text": "Co mu odpowiadasz?",
+         "choices": [
+             {"label": "Spokojnie, odprowadziłem cię.", "next": "swiati_kac_help"},
+             {"label": "Sam doszedłeś, kurwa nie wiem jak.","next": "swiati_kac_no"},
+         ]},
+        {"id": "swiati_kac_help", "speaker": "Światas",
+         "text": "Hahaha dzięki ziom, jesteś legenda. Stawiam ci kawę.",
+         "_rep_add": {"swiatas": 2},
+         "_goto": "day5_friki"},
+        {"id": "swiati_kac_no", "speaker": "Światas",
+         "text": "Kurde no... Tata mówił że nie skończe dobrze. Tata miał rację."},
+
+        # — Friki —
+        {"id": "day5_friki", "speaker": None,
+         "text": "Drzwi wybijają się i wbija Friki — z telefonem w ręce, "
+                 "śmiejąc się sam do siebie."},
+        {"speaker": "Friki",
+         "text": "PANOWIE patrzcie! Patrzcie patrzcie, to jest ona, kurwa, "
+                 "to jest 11/10, no powiedzcie sami!"},
+        {"speaker": None,
+         "text": "Friki podtyka ci telefon pod nos i jednocześnie kładzie ci "
+                 "rękę na ramieniu, jakby to była najbardziej naturalna rzecz na świecie."},
+        {"speaker": "Światas", "text": "Friki, łapy. Mam kaca."},
+        {"speaker": "Friki",
+         "text": "Sorka sorka, ale serio popatrzcie. Wczoraj na Tinderze. Match!"},
+
+        # — Nataniel (Nate) z sushi —
+        {"speaker": None,
+         "text": "Siada Nataniel — z plastikowym pudełkiem sushi w jednej ręce, "
+                 "kluczykami od auta w drugiej."},
+        {"speaker": "Nataniel",
+         "text": "Spóźniłem się chłopaki, sorka. Wczoraj zamykałem knajpę o północy, "
+                 "potem 90 km z powrotem do Bydzi Passatem."},
+        {"speaker": "Friki", "text": "Nat, masz coś z sushi? Głodny jestem jak pies!"},
+        {"speaker": "Nataniel",
+         "text": "Mam jeszcze rolki z wczoraj. Częstuj się {mojeimie}, ty pierwszy."},
+        {"speaker": None, "text": "Bierzesz?",
+         "choices": [
+             {"label": "Jasne, dzięki Nat!",        "next": "nat_sushi_yes"},
+             {"label": "Nie, kac mi nie pozwala.", "next": "nat_sushi_no"},
+         ]},
+        {"id": "nat_sushi_yes", "speaker": "Nataniel",
+         "text": "Spoko ziom. Smakuje? Sam sklejam.",
+         "_rep_add": {"nataniel": 3},
+         "_goto": "day5_kamil"},
+        {"id": "nat_sushi_no", "speaker": "Nataniel",
+         "text": "Spoko spoko, rozumiem. Jak będziesz w Bydzi w Sushi Mura, "
+                 "to powiedz że jesteś moim ziomkiem — dam ci zniżkę.",
+         "_rep_add": {"nataniel": 1}},
+
+        # — Kamil z notatkami —
+        {"id": "day5_kamil", "speaker": None,
+         "text": "Wchodzi Kamil — z laptopem pod pachą i otwartym notesem. "
+                 "Spokojny, skupiony."},
+        {"speaker": "Nataniel",
+         "text": "O Kamil! Słuchaj, jutro mamy kolosa z analizy. Ratuj."},
+        {"speaker": "Kamil",
+         "text": "Siadaj Nat, pokaż mi zadania. To nie jest trudne, tylko trzeba "
+                 "rozumieć po co się to robi."},
+        {"speaker": None,
+         "text": "Kamil rozkłada notatki na całym stole. Co druga strona ma "
+                 "kolorowe podkreślenia i strzałki."},
+        {"speaker": "Friki",
+         "text": "Kamil ty jesteś bogiem. Wiesz że jesteś moim wzorem? Daj się przytulić."},
+        {"speaker": "Kamil",
+         "text": "Friki, później. Najpierw Nat zda kolosa.",
+         "_rep_add": {"kamil": 2}},
+
+        # — Dima na koniec —
+        {"speaker": None,
+         "text": "Ostatni przychodzi Dima — z kawą z automatu i tajemniczym uśmiechem. "
+                 "Siada powoli."},
+        {"speaker": "Dima",
+         "text": "Ej chłopaki. Słuchajcie. Pomyślałem sobie dziś rano coś ważnego."},
+        {"speaker": "Juras", "text": "Dima nie, prosze."},
+        {"speaker": "Dima",
+         "text": "Fordon to nie jest dzielnica Bydgoszczy. Fordon to jest stan umysłu."},
+        {"speaker": None, "text": "Cisza. Wszyscy patrzą na Dimę."},
+        {"speaker": "Dima",
+         "text": "Pomyślcie. Ludzie tam mieszkają, ale nigdy się nie zastanowili dlaczego "
+                 "budzą się szczęśliwi. Bo Fordon ich kocha. A oni nie wiedzą."},
+        {"speaker": "Friki", "text": "Dima, ty mi dzisiaj zostań blisko, ja chcę cię słuchać."},
+        {"speaker": "Juras",
+         "text": "Dima, ja cię proszę, idź się przewietrz. Albo wypij wodę."},
+        {"speaker": "Kamil", "text": "Mnie się to faktycznie podoba. Fordon = telos. Spoko."},
+        {"speaker": None,
+         "text": "Ekipa siedzi razem jeszcze godzinę. Pierwszy raz od dawna "
+                 "czujesz że to ekipa.",
+         "_set": {"day5_done": 1}},
+    ],
+
+    # ── DZIEŃ 6 — WYCIECZKA DO USTKI ────────────────────────────────────────
+    6: [
+        {"id": "day6_start", "speaker": None, "text": "Dzień 6"},
+        {"speaker": None,
+         "text": "Wiadomość na grupie 'Chomiki ale gay': "
+                 "'Chłopaki, jadę pojutrze na ryby do Ustki, kto wbija?' "
+                 "— Kamil."},
+        {"speaker": None,
+         "text": "W ciągu 10 minut zapisali się wszyscy: Friki, Juras, Dima, "
+                 "Nataniel, Szymon, Światas, ty."},
+        {"speaker": "Nataniel",
+         "text": "Spoko, bierzemy mojego Passata. 7 osób się zmieści, jak Friki "
+                 "siądzie Frikiemu na kolanach."},
+        {"speaker": "Friki", "text": "Nat, dla ciebie wszystko."},
+
+        # — Spotkanie rano przy aucie —
+        {"speaker": None,
+         "text": "Sobota, 6:00 rano. Stoicie pod blokiem Nataniela. Passat 2004, "
+                 "srebrny, wypolerowany jak nowy."},
+        {"speaker": "Nataniel",
+         "text": "Tylko po cichutku przy wsiadaniu, ona stara baba jest, "
+                 "ale jak ją kocham..."},
+        {"speaker": "Światas",
+         "text": "Nat, ty z tym autem mówisz jak z dziewczyną. Ty się dobrze czujesz?"},
+
+        # — W aucie, wybór sąsiada —
+        {"speaker": None,
+         "text": "Nataniel za kierownicą. Friki obok (oczywiście). Z tyłu masz miejsce. "
+                 "Obok kogo siedzisz?",
+         "choices": [
+             {"label": "Obok Dimy",   "next": "ride_dima"},
+             {"label": "Obok Jurasa", "next": "ride_juras"},
+             {"label": "Obok Kamila", "next": "ride_kamil"},
+         ]},
+
+        {"id": "ride_dima", "speaker": "Dima",
+         "text": "{mojeimie}, dobry wybór. Wiesz że samochód jako koncept "
+                 "to przedłużenie nóg? My się nigdzie nie ruszamy, my się rozszerzamy."},
+        {"speaker": None, "text": "Dima cały czas filozofuje przez 2 godziny drogi. Przeżyłeś.",
+         "_rep_add": {"dima": 3},
+         "_goto": "ustka_arrival"},
+
+        {"id": "ride_juras", "speaker": "Juras",
+         "text": "No to organizujemy, {mojeimie}. Bierzesz wodę, kanapki, ja przejmuję "
+                 "harmonogram. Friki sprawdzasz przynęty, Kamil — wędki, Dima — "
+                 "płacisz na stacji."},
+        {"speaker": None, "text": "Juras wszystko ogarnia. Czujesz że dzień będzie udany.",
+         "_rep_add": {"juras": 3},
+         "_goto": "ustka_arrival"},
+
+        {"id": "ride_kamil", "speaker": "Kamil",
+         "text": "{mojeimie}, ty już byłeś w Ustce? Tam jest takie miejsce za starym molo, "
+                 "tam zawsze coś bierze. Pokażę ci."},
+        {"speaker": None,
+         "text": "Kamil opowiada ci wszystko o rybach, mówi że nauczyłeś się więcej "
+                 "niż na zajęciach z biologii w liceum.",
+         "_rep_add": {"kamil": 3},
+         "_goto": "ustka_arrival"},
+
+        # — W drodze drama o muzykę —
+        {"id": "ustka_arrival", "speaker": None,
+         "text": "Po drodze Friki próbuje przejąć aux."},
+        {"speaker": "Friki",
+         "text": "Nat puść mnie do aux! Mam playlistę dance, wszyscy potańczymy w aucie!"},
+        {"speaker": "Nataniel", "text": "Friki, w Passacie się NIE TAŃCZY."},
+        {"speaker": "Szymon",
+         "text": "Nat, mogę ja? Mam świeży drop Bedoesa, jeszcze nawet nikt nie zna."},
+        {"speaker": "Nataniel", "text": "Pecik, tylko ty. Bedoes może być."},
+        {"speaker": None,
+         "text": "Bedoes leci od Bydgoszczy do Słupska. Szymon śpiewa każde słowo."},
+
+        # — Ustka, łowienie —
+        {"speaker": None,
+         "text": "Ustka. Plaża. Wiatr. Kamil prowadzi was za stare molo."},
+        {"speaker": None,
+         "text": "Po dwóch godzinach łapania pustek — Kamilowi bierze. Ciągnie. "
+                 "I ciągnie. Wyciąga rybę 40cm."},
+        {"speaker": "Kamil", "text": "Tak. To jest moment dla którego się żyje."},
+        {"speaker": "Friki",
+         "text": "Kamil!!! Pokaż! Pokaż! Czekaj, ja ją złapię, daj mi ją potrzymać!"},
+        {"speaker": None,
+         "text": "Friki podbiega do wędki Kamila — niechcący nadepnie na rączkę. "
+                 "TRZASK. Wędka pęka na pół.",
+         "effect": "shake"},
+        {"speaker": "Kamil", "text": "..."},
+        {"speaker": "Friki",
+         "text": "O kurwa. Kamil. Kamil ja nie chciałem, naprawdę, ja po prostu się "
+                 "ucieszyłem dla ciebie."},
+        {"speaker": None, "text": "Kamil patrzy na połamaną wędkę. Cisza."},
+        {"speaker": None, "text": "Co robisz?",
+         "choices": [
+             {"label": "Friki to wypadek, każdy widzi.",         "next": "wedka_friki_def"},
+             {"label": "Friki, kupisz mu nową w poniedziałek.", "next": "wedka_mediator"},
+             {"label": "Friki, znowu coś popsułeś, kurwa.",     "next": "wedka_friki_blame"},
+         ]},
+
+        {"id": "wedka_friki_def", "speaker": "Kamil",
+         "text": "...{mojeimie}, ja wiem że to wypadek. Ale to była wędka po dziadku.",
+         "_rep_add": {"kamil": -3, "friki": 4}},
+        {"speaker": "Friki",
+         "text": "Stary, kupię ci taką samą, przysięgam. Pójdę z Natanielem do sklepu.",
+         "_goto": "ustka_return"},
+
+        {"id": "wedka_mediator", "speaker": "Kamil",
+         "text": "...okej. Friki, czekam.",
+         "_rep_add": {"kamil": 2, "friki": 2}},
+        {"speaker": "Friki", "text": "Słowo, Kamil. Słowo.",
+         "_goto": "ustka_return"},
+
+        {"id": "wedka_friki_blame", "speaker": "Friki",
+         "text": "{mojeimie}... no kurwa, nie tak. Przeprosiłem.",
+         "_rep_add": {"friki": -5, "kamil": 3}},
+        {"speaker": "Juras",
+         "text": "{mojeimie}, spokojnie. To wypadek. Friki kupi nową, koniec.",
+         "_rep_add": {"juras": 1}},
+
+        # — Wracając —
+        {"id": "ustka_return", "speaker": None,
+         "text": "Wracając. Passat śmierdzi rybami. Nataniel ledwo wytrzymuje, "
+                 "okno otwarte na max."},
+        {"speaker": "Nataniel", "text": "Friki, daj mi święte słowo że nie zrobiłeś tego specjalnie."},
+        {"speaker": "Friki", "text": "Nat, gdybym chciał to byłbym wzięty na klatę, słowo skauta."},
+        {"speaker": "Dima",
+         "text": "Wiecie że ryba w aucie to metafora? My wszyscy jesteśmy rybą w aucie "
+                 "Nataniela. Życie."},
+        {"speaker": "Juras", "text": "Dima, otwórz okno z tyłu."},
+
+        # — Friki śpi na ramieniu Nataniela —
+        {"speaker": None,
+         "text": "Pod koniec drogi Friki zasypia. Z głową na ramieniu Nataniela. "
+                 "Ślini się na jego kurtkę. Nataniel patrzy w lusterko bezsilnie."},
+        {"speaker": "Nataniel", "text": "Czemu zawsze ja..."},
+        {"speaker": None,
+         "text": "Wyrzucacie się pod Bydzią. Wszyscy zmęczeni, ale dobry dzień. "
+                 "Pierwszy raz czujesz że Kamil cię polubił.",
+         "_set": {"day6_done": 1}},
+    ],
+
+    # ── DZIEŃ 7 — IMPREZA U FRIKIEGO + ZDRADA ───────────────────────────────
+    7: [
+        {"id": "day7_start", "speaker": None, "text": "Dzień 7"},
+        {"speaker": None,
+         "text": "Friki wysyła zaproszenie na grupę: "
+                 "'Panowie 20:00 u mnie pre-party, potem do klubu lecimy!'"},
+        {"speaker": None,
+         "text": "20:15. Mieszkanie Frikiego — mały kawalerek na Bartodziejach, "
+                 "głośna muzyka, świece zapachowe (które gasną od dymu)."},
+        {"speaker": None,
+         "text": "Są wszyscy: Szymon, Juras, Dima, Nataniel, Kamil, Światas, ty."},
+        {"speaker": "Friki",
+         "text": "PANOWIE! Shoty! Wszyscy! Nikt mi się nie wymknie!"},
+
+        # — Vignettes z imprezy —
+        {"speaker": None,
+         "text": "Światas po dwóch shotach już mówi z trudem."},
+        {"speaker": "Światas",
+         "text": "Eee... ja juz po dwóch... normalnie tak nie miało być... ja sobie "
+                 "tylko siądę tu pod ścianą."},
+        {"speaker": None,
+         "text": "Dima stoi w kuchni przy otwartej lodówce. Filozofuje."},
+        {"speaker": "Dima",
+         "text": "Kurde patrzcie. Friki ma 4 piwa, 1 ser i ketchup. To jest piękne. "
+                 "To jest pokój ostatniej wolności."},
+        {"speaker": "Kamil",
+         "text": "Dima, masz to nagrane? Bo ja muszę to przemyśleć w domu."},
+        {"speaker": None,
+         "text": "Friki krąży po pokoju i całuje każdego w policzek z napisem 'KOCHAM CIĘ'."},
+        {"speaker": "Friki",
+         "text": "{mojeimie}, ty też! Dawaj policzek! Nie uciekaj!"},
+        {"speaker": "Juras",
+         "text": "Friki, jeszcze dwa policzki i wzywam ochronę osobistą."},
+        {"speaker": None,
+         "text": "Szymon siedzi w kącie, słuchawki w uszach. Kiwa głową w rytmie. "
+                 "Bedoes oczywiście."},
+
+        # — Plot twist: zarysowany Passat —
+        {"speaker": None,
+         "text": "21:30. Nataniel wychodzi na chwilę do auta, sprawdzić czy zamknięte. "
+                 "Wraca po 3 minutach. Biały jak ściana."},
+        {"speaker": "Nataniel",
+         "text": "Chłopaki... ktoś mi zarysował Passata. Wielką literą. K. "
+                 "Wzdłuż całego boku."},
+        {"speaker": None, "text": "Cisza. Tylko Bedoes leci z głośnika."},
+        {"speaker": "Friki",
+         "text": "K? K... K jak Krystian? K jak Klaudia? K jak Kamil? K jak... kurwa?"},
+        {"speaker": "Juras",
+         "text": "Friki, zamknij się. Nat, spokojnie. Da się to wypolerować."},
+        {"speaker": "Kamil",
+         "text": "Nat, sprawdziłeś monitoring osiedla? Pewnie jakiś jest."},
+        {"speaker": "Światas",
+         "text": "Eee ja nic nie wiem, nikomu nic nie mówiłem... znaczy znaczy, "
+                 "ja po prostu siedziałem."},
+        {"speaker": "Dima",
+         "text": "Wiecie że K jako litera oznacza chaos? Po grecku 'kaos'. To znak."},
+        {"speaker": "Nataniel", "text": "Dima, NIE TERAZ."},
+
+        # — Wybór gracza —
+        {"speaker": None, "text": "Nataniel patrzy na ciebie. Co podpowiadasz?",
+         "choices": [
+             {"label": "To pewnie jakieś dzieciaki z osiedla.",
+              "next": "passat_kids"},
+             {"label": "Sprawdź monitoring, Kamil ma rację.",
+              "next": "passat_camera"},
+             {"label": "K... Może Klaudia? Słyszałem że się z nią pokłóciłeś.",
+              "next": "passat_klaudia"},
+             {"label": "Nat, ja ci zrzucę kasę na polerkę. Spokojnie.",
+              "next": "passat_money"},
+         ]},
+
+        {"id": "passat_kids", "speaker": "Nataniel",
+         "text": "Pewnie masz rację. Kurwa, no nic. Zgłoszę policji.",
+         "_rep_add": {"nataniel": 1},
+         "_goto": "passat_aftermath"},
+
+        {"id": "passat_camera", "speaker": "Kamil",
+         "text": "{mojeimie}, ty też tak myślisz? Dobra, Nat, jutro pójdę z tobą "
+                 "do spółdzielni.",
+         "_rep_add": {"kamil": 3, "nataniel": 2},
+         "_goto": "passat_aftermath"},
+
+        {"id": "passat_klaudia", "speaker": "Nataniel",
+         "text": "Klaudia?! Kurwa. Faktycznie się pokłóciliśmy w środę. "
+                 "Ty masz coś z głową, ona by tego nie zrobiła. ...A może by?",
+         "_rep_add": {"nataniel": -2}},
+        {"speaker": "Friki",
+         "text": "{mojeimie}, ja byłbym ostrożny z takimi oskarżeniami, "
+                 "Klaudia to jest typ co potrafi przyjść tutaj i rozbić mi okna."},
+
+        {"id": "passat_money", "speaker": "Nataniel",
+         "text": "Stary... nie. Doceniam, ale nie. To moja sprawa.",
+         "_rep_add": {"nataniel": 4}},
+        {"speaker": "Juras",
+         "text": "{mojeimie}, dobry gest. Nat, on naprawdę by zrzucił, ja go znam.",
+         "_rep_add": {"juras": 1}},
+
+        # — Aftermath —
+        {"id": "passat_aftermath", "speaker": None,
+         "text": "Wieczór się rozwala. Nataniel nigdzie nie jedzie, zostaje w Bydzi "
+                 "do polerki. Klub odwołany."},
+        {"speaker": "Friki",
+         "text": "Panowie, sorka że tak skończyło. To nie miało tak być..."},
+        {"speaker": None,
+         "text": "Wracacie po cichu na piechotę. Każdy w swoją stronę. "
+                 "Pierwsza raz odkąd jesteście ekipą — czujesz że jest coś nie tak.",
+         "_set": {"day7_done": 1}},
+    ],
+
+    # ── DZIEŃ 8 — WYKŁAD + NOTATKI KUZYNA SZYMONA ───────────────────────────
+    8: [
+        {"id": "day8_start", "speaker": None, "text": "Dzień 8"},
+        {"speaker": None,
+         "text": "Sala wykładowa. 9:45. Profesor monotonnie czyta z slajdów "
+                 "o granicach funkcji."},
+        {"speaker": None,
+         "text": "Połowa sali śpi. Friki rysuje w zeszycie penisy. Światas otwiera "
+                 "i zamyka oczy w przypadkowych odstępach."},
+        {"speaker": None, "text": "I wtedy Dima podnosi rękę."},
+        {"speaker": "Profesor", "text": "Tak, kolego?"},
+        {"speaker": "Dima",
+         "text": "Panie profesorze, mam pytanie. Czy uważa pan że granica funkcji "
+                 "to metafora życia?"},
+        {"speaker": "Profesor",
+         "text": "Eee... panie kolego, nie do końca rozumiem do czego pan zmierza..."},
+        {"speaker": "Dima",
+         "text": "No bo wie pan, granica istnieje, ale nigdy się jej nie osiąga. "
+                 "Tak jak Fordon w Bydgoszczy."},
+        {"speaker": None, "text": "Sala wybucha śmiechem.", "effect": "shake"},
+        {"speaker": "Profesor",
+         "text": "Panie kolego, proszę się skupić na temacie wykładu."},
+        {"speaker": "Dima", "text": "Skupiam się, panie profesorze. Na Fordonie."},
+        {"speaker": None,
+         "text": "Profesor czerwienieje. Sala nadal się śmieje. Friki "
+                 "płacze ze śmiechu."},
+
+        # — Kamil ratuje —
+        {"speaker": "Kamil",
+         "text": "Panie profesorze, w nawiązaniu — czy w punkcie nieciągłości "
+                 "pierwszego rodzaju granica jest dobrze określona, czy "
+                 "musimy rozważyć granice jednostronne?"},
+        {"speaker": None,
+         "text": "Profesor zmiękczy. Wraca do tematu. Kamil mrugnął do Dimy. "
+                 "Dima skinął głową z uznaniem.",
+         "_rep_add": {"kamil": 2, "dima": 1}},
+
+        # — Po wykładzie SMS od kuzyna Szymona —
+        {"speaker": None,
+         "text": "Po wykładzie ekipa zbiera się w korytarzu. Szymon ma minę "
+                 "jak by wygrał LOTTO."},
+        {"speaker": "Szymon",
+         "text": "Chłopaki. Dostałem SMS od kuzyna z UKW. On zdawał tego samego "
+                 "profesora dwa lata temu. Ma WSZYSTKIE notatki.",
+         "image": "szymon_happy.png"},
+        {"speaker": "Friki",
+         "text": "Pecik. PECIK. Ty wiesz że ja cię kocham? Mogę cię całować w policzek?"},
+        {"speaker": "Juras",
+         "text": "Friki, dystans. Pecik — dzielisz się, no nie?"},
+        {"speaker": "Nataniel",
+         "text": "Pecik, ratuj. Jutro mamy ostatni egzamin, ja nic nie umiem."},
+        {"speaker": "Kamil",
+         "text": "Pecik, fajnie. Jak dasz mi też, to ja wam jeszcze tłumaczę co jest co."},
+        {"speaker": None, "text": "Co mówisz Szymonowi?",
+         "choices": [
+             {"label": "Pecik, podziel się — każdy zda razem.", "next": "notes_share_all"},
+             {"label": "Pecik, daj tylko mi, oszczędzimy konkurencji.","next": "notes_share_me"},
+             {"label": "Pecik, twoja decyzja.",                  "next": "notes_share_szymon"},
+         ]},
+
+        {"id": "notes_share_all", "speaker": "Szymon",
+         "text": "Jasne! No oczywiście że się dziele. Po to mam was, chłopaki.",
+         "image": "szymon_happy.png",
+         "_rep_add": {"szymon": 4, "kamil": 2, "nataniel": 2, "juras": 2, "friki": 2},
+         "_set": {"notes_shared": 1},
+         "_goto": "day8_end"},
+
+        {"id": "notes_share_me", "speaker": "Szymon",
+         "text": "Eee... {mojeimie}, naprawdę? Chłopaki nas potrzebują...",
+         "image": "szymon_neutral.png",
+         "_rep_add": {"szymon": -6, "kamil": -2, "nataniel": -2, "juras": -2, "friki": -3}},
+        {"speaker": "Szymon",
+         "text": "Nie, dzielę się z wszystkimi. Sorry {mojeimie}, ale tak nie robimy.",
+         "image": "szymon_neutral.png",
+         "_set": {"notes_shared": 1},
+         "_goto": "day8_end"},
+
+        {"id": "notes_share_szymon", "speaker": "Szymon",
+         "text": "Dzielę się z wszystkimi, jasne. Po to są kumple.",
+         "image": "szymon_happy.png",
+         "_rep_add": {"szymon": 1},
+         "_set": {"notes_shared": 1}},
+
+        {"id": "day8_end", "speaker": None,
+         "text": "Wieczorem Szymon wysłał PDF na grupę. 87 stron skanowanych notatek. "
+                 "Cała ekipa siedzi do 3 w nocy, każdy w swoim mieszkaniu, ucząc się.",
+         "_set": {"day8_done": 1}},
+    ],
+
+    # ── DZIEŃ 9 — EGZAMIN (CLIMAX) ──────────────────────────────────────────
+    9: [
+        {"id": "day9_start", "speaker": None, "text": "Dzień 9"},
+        {"speaker": None,
+         "text": "Rano. 7:50. Sala 312. Wszyscy stoją pod drzwiami, nerwowi, "
+                 "przeglądają jeszcze raz notatki Szymona."},
+        {"speaker": "Friki",
+         "text": "{mojeimie}, ja czuję że zaraz zwymiotuję. Powiedz mi że to nie boli."},
+        {"speaker": "Juras",
+         "text": "Friki, spokojnie. Trzy oddechy. Jak nie umiesz to zostawiasz, "
+                 "lecisz dalej."},
+        {"speaker": "Kamil",
+         "text": "Spokojnie wszyscy. Notatki Pecika są wystarczające. Tylko myślcie."},
+        {"speaker": "Światas",
+         "text": "Eee... ja jeszcze pamiętam żeby się obudzić, to dobrze, nie?"},
+        {"speaker": "Dima",
+         "text": "Egzamin to nie sprawdzenie wiedzy. To sprawdzenie czy jesteś "
+                 "obecny w tej chwili. Lecimy."},
+        {"speaker": "Szymon",
+         "text": "Trzymajcie się chłopaki. Wszyscy zdamy.",
+         "image": "szymon_happy.png"},
+
+        # — Egzamin —
+        {"speaker": None,
+         "text": "8:00. Wchodzicie. Profesor rozdaje arkusze. 5 zadań. 90 minut."},
+        {"speaker": "Profesor", "text": "Czas: 90 minut. Powodzenia."},
+        {"speaker": None,
+         "text": "Piszesz. Idzie. Notatki Pecika ratują tyłek — pierwsze trzy "
+                 "zadania znasz."},
+        {"speaker": None,
+         "text": "Rozglądasz się po sali. Szymon pisze pewnie, uśmiecha się "
+                 "do kartki. Światas śpi z otwartymi oczami. Dima patrzy w sufit "
+                 "(filozofuje)."},
+        {"speaker": None,
+         "text": "Nataniel pisze normalnie. Kamil już skończył w połowie czasu — "
+                 "oddał, wyszedł, dyskretnie kiwając do wszystkich."},
+        {"speaker": None,
+         "text": "I wtedy odwraca się do ciebie Friki. Oczy jak u psa porzuconego "
+                 "na wsi. Szepcze:"},
+        {"speaker": "Friki", "text": "{mojeimie}... błagam... zadanie 4..."},
+        {"speaker": None,
+         "text": "W tej samej chwili z drugiej strony Juras patrzy na ciebie. "
+                 "Spokojny ale błagalny. Kiwa głową — on też potrzebuje."},
+        {"speaker": None,
+         "text": "Profesor odwrócony do tablicy. Masz 10 sekund."},
+        {"speaker": None, "text": "Komu podpowiesz?",
+         "choices": [
+             {"label": "Frikiemu (Juras nie zda)",  "next": "exam_help_friki"},
+             {"label": "Jurasowi (Friki nie zda)", "next": "exam_help_juras"},
+             {"label": "Nikomu — niech sami sobie radzą.", "next": "exam_help_none"},
+             {"label": "Spróbuję pomóc obu.",       "next": "exam_help_both"},
+         ]},
+
+        # — Branch: pomagasz Frikiemu —
+        {"id": "exam_help_friki", "speaker": None,
+         "text": "Wyciągasz kartkę z odpowiedziami. Friki kopiuje błyskawicznie. "
+                 "Juras to widzi. Spuszcza wzrok i zaczyna pisać byle co."},
+        {"speaker": None,
+         "text": "Egzamin się kończy. Oddajecie kartki. Wychodzicie."},
+        {"speaker": "Friki",
+         "text": "{mojeimie}, kurwa, jesteś moim BOGIEM. Dziękuję ci. Słowo daję, "
+                 "od dziś jestem twoim psem.",
+         "_rep_add": {"friki": 8}},
+        {"speaker": "Juras",
+         "text": "{mojeimie}. Widziałem. Rozumiem. Nikt komu nie jest dłużny.",
+         "_rep_add": {"juras": -7}},
+        {"speaker": None,
+         "text": "Tydzień później wyniki: Friki zdał na 3, Juras nie zdał. "
+                 "Juras musi powtarzać przedmiot.",
+         "_set": {"exam_winner": "friki"},
+         "_goto": "exam_aftermath"},
+
+        # — Branch: pomagasz Jurasowi —
+        {"id": "exam_help_juras", "speaker": None,
+         "text": "Spojrzeniem dajesz znak Jurasowi. Pokazujesz mu kartkę. "
+                 "Juras notuje błyskawicznie i odwraca się z powrotem. "
+                 "Friki widzi to. Zamarł."},
+        {"speaker": None, "text": "Egzamin się kończy. Wszyscy wychodzą."},
+        {"speaker": "Juras",
+         "text": "{mojeimie}, dziękuję. Naprawdę. Wiem co to znaczyło. "
+                 "Jestem ci to winien.",
+         "_rep_add": {"juras": 8}},
+        {"speaker": "Friki",
+         "text": "{mojeimie}... dlaczego jemu? Czemu nie mi? Ja jestem twoim ziomkiem...",
+         "_rep_add": {"friki": -7}},
+        {"speaker": None,
+         "text": "Tydzień później wyniki: Juras zdał na 4, Friki nie zdał. "
+                 "Friki musi powtarzać przedmiot.",
+         "_set": {"exam_winner": "juras"},
+         "_goto": "exam_aftermath"},
+
+        # — Branch: nikomu —
+        {"id": "exam_help_none", "speaker": None,
+         "text": "Wzruszasz ramionami w obie strony. Friki opadają ramiona. "
+                 "Juras kiwa głową — rozumie."},
+        {"speaker": None, "text": "Egzamin się kończy. Oddajecie. Wychodzicie."},
+        {"speaker": "Friki", "text": "{mojeimie}... no okej. Sam zawaliłem. Nie ma sprawy.",
+         "_rep_add": {"friki": -2}},
+        {"speaker": "Juras",
+         "text": "{mojeimie}, szanuję. Każdy odpowiada za siebie. To dorosła decyzja.",
+         "_rep_add": {"juras": 3}},
+        {"speaker": None,
+         "text": "Tydzień później wyniki: Friki nie zdał. Juras nie zdał. "
+                 "Obaj powtarzają przedmiot, ale nikt nie ma do ciebie żalu.",
+         "_set": {"exam_winner": "nobody"},
+         "_goto": "exam_aftermath"},
+
+        # — Branch: próbujesz obu —
+        {"id": "exam_help_both", "speaker": None,
+         "text": "Pokazujesz kartkę raz w lewo, raz w prawo. Niezgrabnie. Głośno."},
+        {"speaker": None,
+         "text": "Profesor odwraca głowę. Patrzy. Patrzy na ciebie. Wstaje.",
+         "effect": "shake"},
+        {"speaker": "Profesor",
+         "text": "Pan kolega. Proszę o kartkę. I proszę wyjść."},
+        {"speaker": None,
+         "text": "Twoja kartka idzie do kosza. Friki i Juras zostają sami z zadaniem 4."},
+        {"speaker": None,
+         "text": "Tydzień później wyniki: TY nie zdałeś (zostałeś zdyskwalifikowany), "
+                 "Friki nie zdał, Juras zdał na 3 z resztek własnego rozumu.",
+         "_rep_add": {"friki": -5, "juras": 1},
+         "_set": {"exam_winner": "disaster"},
+         "_goto": "exam_aftermath"},
+
+        # — Aftermath wspólne —
+        {"id": "exam_aftermath", "speaker": None,
+         "text": "Wieczorem ekipa zbiera się w pubie pod uczelnią. Pijecie. Mało gadacie."},
+        {"speaker": "Szymon",
+         "text": "{mojeimie}, każdy zrobił co mógł. Ważne że jesteśmy razem.",
+         "image": "szymon_happy.png"},
+        {"speaker": "Kamil",
+         "text": "Egzamin to tylko egzamin. Wiedza zostanie. Sesja minie. "
+                 "Pomyślcie o lecie."},
+        {"speaker": "Dima",
+         "text": "Wiecie że sesja w studenckim życiu to jak Fordon w Bydgoszczy? "
+                 "Bardzo intensywna. I też nikt nie wie po co."},
+        {"speaker": "Światas", "text": "Dima... ja cię kurwa kocham."},
+        {"speaker": None,
+         "text": "Wieczór się kończy. Wracasz do domu sam, klucze w dłoni. "
+                 "Reflektujesz nad tym co się stało.",
          "_branch_rep": {"char": "szymon",
                          "thresholds": [(15, "day2115")],
                          "default": "end_story"}},
@@ -813,9 +1387,9 @@ SCENES_BY_DAY = {
         {"id": "end_story", "speaker": None,
          "text": "— Koniec dostępnej fabuły —\n\n"
                  "Dziękujemy za grę!", "_goto": "title_loop"},
-        {"id": "game_over", "speaker": None,
-         "text": "Szymon cię zabił.\n\n— GAME OVER —",
-         "effect": "shake", "_goto": "title_loop"},
+        {"id": "true_game_over", "speaker": None,
+         "text": "Dziękujemy za grę.\n\nDo zobaczenia.",
+         "_goto": "title_loop"},
         {"id": "title_loop", "speaker": None, "text": "", "_goto": None},
     ],
 }
@@ -828,16 +1402,21 @@ def _build_scenes():
         0    -> meta (tylko title)
         1    -> Dzień 1
         2    -> Dzień 2 (biblioteka, kawka, ścieżka odmowy)
-        3    -> Dzień 3 (NOWY — Friki/Nate/Juras/Dima)
+        3    -> Dzień 3 (Friki/Nate/Juras/Dima)
         4    -> Dzień 4 (Point club)
+        5    -> Dzień 5 (stołówka — wprowadzenie Nataniela + Kamila)
+        6    -> Dzień 6 (wycieczka do Ustki, drama z wędką Kamila)
+        7    -> Dzień 7 (impreza u Frikiego, zarysowany Passat)
+        8    -> Dzień 8 (wykład, Dima filozofuje, notatki Szymona)
+        9    -> Dzień 9 (egzamin — wybór Friki vs Juras)
         2115 -> SEKRETNY dzień (koncert Bedoesa)
-        99   -> meta końca (end_story, game_over)
+        99   -> meta końca (end_story, game_over, true_game_over)
 
     Zwraca: (lista_scen, dict_etykiet)
     """
     flat = []
     labels = {}
-    for day_key in (0, 1, 2, 3, 4, 2115, 99):
+    for day_key in (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 2115, 99):
         for scene in SCENES_BY_DAY[day_key]:
             sid = scene.get("id")
             if sid:
@@ -1692,7 +2271,9 @@ class VisualNovel:
             for k, delta in scene["_inc"].items():
                 self.game_vars[k] = self.game_vars.get(k, 0) + delta
         if "_rep_add" in scene:
-            names = {"szymon": "Szymon", "swiatas": "Światas"}
+            names = {"szymon": "Szymon", "swiatas": "Światas",
+                     "juras": "Juras", "friki": "Friki", "dima": "Dima",
+                     "nataniel": "Nataniel", "kamil": "Kamil"}
             for char, delta in scene["_rep_add"].items():
                 key = f"rep_{char}"
                 old = self.game_vars.get(key, 0)
