@@ -801,16 +801,17 @@ SCENES_BY_DAY = {
                  "Siada powoli."},
         {"speaker": "Dima",
          "text": "Ej chłopaki. Słuchajcie. Pomyślałem sobie dziś rano coś ważnego."},
-        {"speaker": "Juras", "text": "Dima nie, prosze."},
+        {"speaker": "Juras",
+         "text": "O nie. Czuję że to bedzie dobre. Dawaj Dima, zamieniamy się w słuch."},
         {"speaker": "Dima",
          "text": "Fordon to nie jest dzielnica Bydgoszczy. Fordon to jest stan umysłu."},
-        {"speaker": None, "text": "Cisza. Wszyscy patrzą na Dimę."},
+        {"speaker": None, "text": "Sekunda ciszy. Potem Friki ryczy ze śmiechu, Światas się krztusi kawą."},
         {"speaker": "Dima",
          "text": "Pomyślcie. Ludzie tam mieszkają, ale nigdy się nie zastanowili dlaczego "
                  "budzą się szczęśliwi. Bo Fordon ich kocha. A oni nie wiedzą."},
-        {"speaker": "Friki", "text": "Dima, ty mi dzisiaj zostań blisko, ja chcę cię słuchać."},
+        {"speaker": "Friki", "text": "Dima, ty mi dzisiaj zostań blisko, ja muszę słyszeć więcej!"},
         {"speaker": "Juras",
-         "text": "Dima, ja cię proszę, idź się przewietrz. Albo wypij wodę."},
+         "text": "Hahaha no Dima, gratulacje. Po raz kolejny mistrz przekminki dnia."},
         {"speaker": "Kamil", "text": "Mnie się to faktycznie podoba. Fordon = telos. Spoko."},
         {"speaker": None,
          "text": "Ekipa siedzi razem jeszcze godzinę. Pierwszy raz od dawna "
@@ -854,9 +855,17 @@ SCENES_BY_DAY = {
          ]},
 
         {"id": "ride_dima", "speaker": "Dima",
-         "text": "{mojeimie}, dobry wybór. Wiesz że samochód jako koncept "
-                 "to przedłużenie nóg? My się nigdzie nie ruszamy, my się rozszerzamy."},
-        {"speaker": None, "text": "Dima cały czas filozofuje przez 2 godziny drogi. Przeżyłeś.",
+         "text": "{mojeimie}, dobry wybór! Wziąłem gitarę, będzie się działo."},
+        {"speaker": None,
+         "text": "Dima rzeczywiście wyciąga akustyk z pokrowca. Po dwóch akordach "
+                 "rozpoznajesz — to Patoreac. Cała ekipa zaczyna nucić."},
+        {"speaker": "Friki", "text": "Dima! Brachu! Zrób refren głośniej!"},
+        {"speaker": "Dima",
+         "text": "Tylko żeby Nataniel nie zlał auta — bo wtedy ja przesiądę się "
+                 "na strunę G i się zabiję."},
+        {"speaker": None,
+         "text": "Cała droga zlecia w mgnieniu oka — Dima gra trzy piosenki, "
+                 "potem oddaje gitarę Szymonowi który próbuje Bedoesa na akustyku.",
          "_rep_add": {"dima": 3},
          "_goto": "ustka_arrival"},
 
@@ -919,13 +928,13 @@ SCENES_BY_DAY = {
          "_rep_add": {"kamil": -3, "friki": 4}},
         {"speaker": "Friki",
          "text": "Stary, kupię ci taką samą, przysięgam. Pójdę z Natanielem do sklepu.",
-         "_goto": "ustka_return"},
+         "_goto": "ustka_fire"},
 
         {"id": "wedka_mediator", "speaker": "Kamil",
          "text": "...okej. Friki, czekam.",
          "_rep_add": {"kamil": 2, "friki": 2}},
         {"speaker": "Friki", "text": "Słowo, Kamil. Słowo.",
-         "_goto": "ustka_return"},
+         "_goto": "ustka_fire"},
 
         {"id": "wedka_friki_blame", "speaker": "Friki",
          "text": "{mojeimie}... no kurwa, nie tak. Przeprosiłem.",
@@ -934,6 +943,44 @@ SCENES_BY_DAY = {
          "text": "{mojeimie}, spokojnie. To wypadek. Friki kupi nową, koniec.",
          "_rep_add": {"juras": 1}},
 
+        # — Ognisko na plaży, Dima z gitarą —
+        {"id": "ustka_fire", "speaker": None,
+         "text": "Wieczór. Atmosfera trochę zgaszona po wędce. Kamil rozpala małe "
+                 "ognisko z drewna wyrzuconego przez morze."},
+        {"speaker": "Dima",
+         "text": "Chłopaki, przyniosłem gitarę. Nikt nie protestuje?"},
+        {"speaker": "Szymon",
+         "text": "Dima, ty na gitarze? Pierwsze słyszę. Pokazuj.",
+         "image": "szymon_happy.png"},
+        {"speaker": None,
+         "text": "Dima siada bliżej ognia, stroi przez chwilę, kaszle teatralnie."},
+        {"speaker": "Dima",
+         "text": "Coś łatwego na początek. Tylko ostrzegam — śpiewam jak chrześcijanin "
+                 "po sześciu piwach."},
+        {"speaker": None,
+         "text": "Pierwsze akordy. Akustyczna wersja czegoś z radia — wszyscy "
+                 "rozpoznają od razu. Nataniel zaczyna nucić, Friki przytula się "
+                 "do Jurasa (Juras nawet nie protestuje)."},
+        {"speaker": "Kamil",
+         "text": "Dima... ty się pod tym śmiejesz, ale serio dobrze grasz. Bez ściemy.",
+         "_rep_add": {"dima": 2, "kamil": 1}},
+        {"speaker": "Światas",
+         "text": "Dima, brachu. Następna piosenka — 'Wonderwall'. Klasyk pod kamerę."},
+        {"speaker": "Dima",
+         "text": "Świat, nie kazda akustyczna noc musi być 'Wonderwall'. "
+                 "Ale dobra, dla ciebie."},
+        {"speaker": None,
+         "text": "Drugi utwór. Wszyscy śpiewają — fałszywie, głośno, szczerze. "
+                 "Nawet Kamil odkłada notatki w plecaku."},
+        {"speaker": "Dima",
+         "text": "Wiecie co? Czuję się jak na okładce indie zespołu z 2014 roku. "
+                 "To miało być smutne, a wyszło ładnie."},
+        {"speaker": "Juras", "text": "Dima, kurde, sentymentalisz nam. Daj jeszcze jedną."},
+        {"speaker": None,
+         "text": "Trzecia piosenka. Ostatnia. Ognisko prawie zgasło, ale nikt "
+                 "się nie ruszył. Dobre 20 minut nikt nic nie mówi po niej.",
+         "_rep_add": {"dima": 3}},
+
         # — Wracając —
         {"id": "ustka_return", "speaker": None,
          "text": "Wracając. Passat śmierdzi rybami. Nataniel ledwo wytrzymuje, "
@@ -941,9 +988,8 @@ SCENES_BY_DAY = {
         {"speaker": "Nataniel", "text": "Friki, daj mi święte słowo że nie zrobiłeś tego specjalnie."},
         {"speaker": "Friki", "text": "Nat, gdybym chciał to byłbym wzięty na klatę, słowo skauta."},
         {"speaker": "Dima",
-         "text": "Wiecie że ryba w aucie to metafora? My wszyscy jesteśmy rybą w aucie "
-                 "Nataniela. Życie."},
-        {"speaker": "Juras", "text": "Dima, otwórz okno z tyłu."},
+         "text": "Spokojnie Nat, ja tę gitarę odłożyłem dalej od ryby. Świat jest sprawiedliwy."},
+        {"speaker": "Juras", "text": "Hahaha Dima, ty zawsze jedną nogą w innym wymiarze."},
 
         # — Friki śpi na ramieniu Nataniela —
         {"speaker": None,
@@ -977,12 +1023,20 @@ SCENES_BY_DAY = {
          "text": "Eee... ja juz po dwóch... normalnie tak nie miało być... ja sobie "
                  "tylko siądę tu pod ścianą."},
         {"speaker": None,
-         "text": "Dima stoi w kuchni przy otwartej lodówce. Filozofuje."},
+         "text": "Dima stoi w kuchni przy otwartej lodówce. Studiuje zawartość "
+                 "jak święte teksty."},
         {"speaker": "Dima",
          "text": "Kurde patrzcie. Friki ma 4 piwa, 1 ser i ketchup. To jest piękne. "
                  "To jest pokój ostatniej wolności."},
         {"speaker": "Kamil",
          "text": "Dima, masz to nagrane? Bo ja muszę to przemyśleć w domu."},
+        {"speaker": None,
+         "text": "Dima przemyka się do salonu, wyciąga z kąta gitarę Frikiego "
+                 "(skąd Friki ma gitarę?), siada na podłodze i zaczyna nucić cicho. "
+                 "Tło dla całej imprezy."},
+        {"speaker": "Friki",
+         "text": "Dima ratuje wieczór jak zawsze. Patrzcie, kto wykrył moją gitarę "
+                 "której sam nie umiem używać!"},
         {"speaker": None,
          "text": "Friki krąży po pokoju i całuje każdego w policzek z napisem 'KOCHAM CIĘ'."},
         {"speaker": "Friki",
@@ -1012,7 +1066,8 @@ SCENES_BY_DAY = {
                  "ja po prostu siedziałem."},
         {"speaker": "Dima",
          "text": "Wiecie że K jako litera oznacza chaos? Po grecku 'kaos'. To znak."},
-        {"speaker": "Nataniel", "text": "Dima, NIE TERAZ."},
+        {"speaker": "Nataniel",
+         "text": "Dima, stary, kocham cię, ale jutro mi to powiesz. Dzisiaj nie dam rady."},
 
         # — Wybór gracza —
         {"speaker": None, "text": "Nataniel patrzy na ciebie. Co podpowiadasz?",
